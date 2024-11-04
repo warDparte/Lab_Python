@@ -4,8 +4,10 @@ def count_letters(str_):
     lower_str = str_.lower()
     for index in lower_str:
         if index.isalpha():
-            value = lower_str.count(index)
-            dict_letters[index] = value
+            if index in dict_letters:
+                dict_letters[index] += 1
+            else:
+                dict_letters[index] = 1
     return dict_letters
 
 # TODO Напишите функцию calculate_frequency
