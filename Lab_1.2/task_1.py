@@ -2,10 +2,6 @@ import doctest
 from typing import Union, Optional
 
 
-LOWER_LIMIT_CHLORINE_NORM = 0.035  # Нижняя допустимая граница хлора в бассейне (литры/кубометры)
-UPPER__LIMIT_CHLORINE_NORM = 0.045  # Верхняя допустимая граница хлора в бассейне (литры/кубометры)
-
-
 class Table:
     def __init__(self, length: Union[int, float], width: Union[int, float], height: Union[int, float], obj: Optional[str]=None):
         """
@@ -85,6 +81,9 @@ class Pool:
     Примеры:
      >>> pool_1 = Pool(1000, 900, 31.5)# инициализация экземпляра класса
         """
+
+        LOWER_LIMIT_CHLORINE_NORM = 0.035  # Нижняя допустимая граница хлора в бассейне (литры/кубометры)
+        UPPER__LIMIT_CHLORINE_NORM = 0.045  # Верхняя допустимая граница хлора в бассейне (литры/кубометры)
 
         if not isinstance(capacity_pool, (int, float)):
             raise TypeError("Неверный тип данных")
