@@ -1,5 +1,5 @@
 from typing import Optional
-from pydantic import BaseModel, Field
+
 
 BOOKS_DATABASE = [
     {
@@ -16,29 +16,62 @@ BOOKS_DATABASE = [
 
 
 # TODO написать класс Book
-class Book(BaseModel):
-    """
-    :param id_: Идентификатор книги
-    :param name: Название книги
-    :param pages: Количество страниц в книге
-    """
-    id_: int = Field(gt=0)
-    name: str
-    pages: int = Field(gt=0)
+class Book:
+    def __init__(self, id_: int, name: str, pages: str):
+        """
+        Создание и подготовка к работе объекта "Книга"
+        :param id_: Идентификатор книги
+        :param name: Название книги
+        :param pages: Количество страниц в книге
+        """
+        if not isinstance(id_, int):
+            raise TypeError('Неверный тип данных')
+        if id_ <= 0:
+            raise ValueError('Значение должно быть положительным')
+        self.id_ = id_
 
+        if not isinstance(name, str):
+            raise TypeError('Неверный тип данных')
+        self.name = name
+
+        if not isinstance(pages, int):
+            raise TypeError('Неверный тип данных')
+        if pages <= 0:
+            raise ValueError('Значение не может быть отрицательным')
+        self.pages = pages
+
+
+    def __str__(self) -> str:
+        return f'Книга "{self.name}"'
+
+
+    def __repr__(self) -> str:
+        return f'{self.__class__.__name__}(id_={self.id}, name={self.name!r}, pages={self.pages})'
 
 # TODO написать класс Library
-class Library(BaseModel):
-    """
-    :param books: Список книг
-    """
-    books: Optional[list[Book]] = Field(default=[])
+class Library:
+    def __init__(self, books: Optional[list[Book]] = []):
+        """
+        Создание и подготовка к работе объекта "Библиотека"
+        :param books: Список книг
+        """
+        if not isinstance(books, list):
+            raise TypeError('Ожидался список книг')
+        self.books = books
+
+
+    def __str__(self):
+        list_library = [v.name for i,v in enumerate(self.books)]
+        return f'Библиотека книг: {list_library}'
+
+
+    def __repr__(self):
+        return f'{self.__class__.__name__}(books={self.books})'
 
 
     def get_next_book_id(self):
         """
-        Метод, возвращающий идентификатор для добавления новой книги в библиотеку.
-
+        Метод, возвращающий идентификатор для добавления новой книги в библиотеку
         :return: Идентификатор для добавления новой книги в библиотеку
         """
         actual_id = len(self.books)
